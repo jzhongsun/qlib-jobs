@@ -40,7 +40,7 @@ jobs:
         env:
           MODELSCOPE_TOKEN: ${{ secrets.MODELSCOPE_TOKEN }}
         run: |
-          modelscope login --token-"$env:MODELSCOPE_TOKEN"
+          modelscope login --token="$MODELSCOPE_TOKEN"
           modelscope upload jzhongsun/qlib-data ./qlib_bin.tar.gz qlib_bin.tar.gz --repo-type dataset
         
           
