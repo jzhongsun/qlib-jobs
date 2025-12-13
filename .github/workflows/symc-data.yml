@@ -27,6 +27,7 @@ jobs:
 
       - uses: robinraju/release-downloader@v1
         with:
+          repository: 'chenditc/investment_data'
           latest: true
           fileName: 'qlib_bin.tar.gz'
           
