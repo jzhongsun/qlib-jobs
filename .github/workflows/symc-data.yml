@@ -54,7 +54,7 @@ jobs:
           modelscope download jzhongsun/qlib-models --repo-type model
           # modelscope download --dataset jzhongsun/qlib-data 
           modelscope download --dataset jzhongsun/tushare-data
-          rm -rf /root/.cache/qlib/
-          mkdir -p /root/.cache/qlib/qlib_data/cn_data
-          tar -zxvf ./qlib_bin.tar.gz -C /root/.cache/qlib/qlib_data/cn_data --strip-components=1
+          rm -rf /home/runner/qlib/
+          mkdir -p /home/runner/qlib/qlib_data/cn_data
+          tar -zxvf ./qlib_bin.tar.gz -C /home/runner/qlib/qlib_data/cn_data --strip-components=1
 
