@@ -45,16 +45,16 @@ jobs:
           modelscope login --token="$MODELSCOPE_TOKEN"
           modelscope upload jzhongsun/qlib-data ./qlib_bin.tar.gz qlib_bin.tar.gz --repo-type dataset
 
-      - name: Upload to modelscope dataset
+      - name: Download dataset
         env:
           MODELSCOPE_TOKEN: ${{ secrets.MODELSCOPE_TOKEN }}
         run: |
           pip install modelscope datasets pyqlib statsmodels catboost xgboost ecos cvxopt
           modelscope login --token="$MODELSCOPE_TOKEN"
           modelscope download jzhongsun/qlib-models --repo-type model
-          modelscope download --dataset jzhongsun/qlib-data 
+          # modelscope download --dataset jzhongsun/qlib-data 
           modelscope download --dataset jzhongsun/tushare-data
-          rm -rf /home/qlib/
-          mkdir -p /home/qlib/qlib_data/cn_data
-          tar -zxvf /root/.cache/modelscope/datasets/jzhongsun/qlib-data/qlib_bin.tar.gz -C /home/qlib/qlib_data/cn_data --strip-components=1
+          rm -rf /root/qlib/
+          mkdir -p /root/qlib/qlib_data/cn_data
+          tar -zxvf ./qlib_bin.tar.gz -C /root/qlib/qlib_data/cn_data --strip-components=1
 
