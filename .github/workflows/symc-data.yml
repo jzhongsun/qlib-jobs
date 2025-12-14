@@ -5,7 +5,7 @@ name: sync-data
 # Controls when the workflow will run
 on:
   schedule:
-    - cron: "25 14 * * *"  # Allows you to run this workflow manually from the Actions tab
+    - cron: "00 11 * * *"  # Allows you to run this workflow manually from the Actions tab
     
   workflow_dispatch:
 
@@ -45,16 +45,10 @@ jobs:
           modelscope login --token="$MODELSCOPE_TOKEN"
           modelscope upload jzhongsun/qlib-data ./qlib_bin.tar.gz qlib_bin.tar.gz --repo-type dataset
 
-      - name: Download dataset
+      - uses: magdemajt/trigger-webhook@v1
         env:
-          MODELSCOPE_TOKEN: ${{ secrets.MODELSCOPE_TOKEN }}
-        run: |
-          pip install modelscope datasets pyqlib statsmodels catboost xgboost ecos cvxopt
-          modelscope login --token="$MODELSCOPE_TOKEN"
-          modelscope download jzhongsun/qlib-models --repo-type model
-          # modelscope download --dataset jzhongsun/qlib-data 
-          modelscope download --dataset jzhongsun/tushare-data
-          rm -rf /home/runner/qlib/
-          mkdir -p /home/runner/qlib/qlib_data/cn_data
-          tar -zxvf ./qlib_bin.tar.gz -C /home/runner/qlib/qlib_data/cn_data --strip-components=1
-
+          WEBHOOK_URL: ${{ secrets.BUILD_WEBHOOK_URL }}
+        with:
+          url: "$WEBHOOK_URL"
+          json: '{"foo": "bar"}' # optional
+          headers: '{"Content-Type": "application/json"}' # optional           
