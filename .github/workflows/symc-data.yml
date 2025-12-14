@@ -45,10 +45,11 @@ jobs:
           modelscope login --token="$MODELSCOPE_TOKEN"
           modelscope upload jzhongsun/qlib-data ./qlib_bin.tar.gz qlib_bin.tar.gz --repo-type dataset
 
-      - uses: magdemajt/trigger-webhook@v1
+      - name: Send POST request via curl
         env:
           WEBHOOK_URL: ${{ secrets.BUILD_WEBHOOK_URL }}
-        with:
-          url: "$WEBHOOK_URL"
-          json: '{"foo": "bar"}' # optional
-          headers: '{"Content-Type": "application/json"}' # optional           
+        run: |
+          curl -X POST \
+            -H "Content-Type: application/json" \
+            -d '{"key": "value"}' \
+            ${{ secrets.BUILD_WEBHOOK_URL }}
